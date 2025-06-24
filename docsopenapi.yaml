@@ -1,0 +1,93 @@
+openapi: 3.0.0
+info:
+  version: "1.0.0"
+  title: "Streaming Platform API"
+  description: "API documentation for the streaming platform backend."
+servers:
+  - url: "http://localhost:5000"  # Change this to your production URL when deploying
+paths:
+  /api/auth/register:
+    post:
+      summary: "User Registration"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        "201":
+          description: "User registered successfully."
+        "400":
+          description: "Missing or invalid fields."
+  /api/auth/login:
+    post:
+      summary: "User Login"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        "200":
+          description: "Login successful, returns token."
+        "401":
+          description: "Invalid credentials."
+  /api/stream:
+    get:
+      summary: "Get Live Streams"
+      responses:
+        "200":
+          description: "List of live streams."
+    post:
+      summary: "Start a New Stream"
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                description:
+                  type: string
+                game:
+                  type: string
+      responses:
+        "201":
+          description: "Stream started successfully."
+  /api/stream/{streamId}:
+    get:
+      summary: "Get Stream Details"
+      parameters:
+        - in: path
+          name: streamId
+          schema:
+            type: string
+          required: true
+          description: "ID of the stream"
+      responses:
+        "200":
+          description: "Stream details returned."
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
