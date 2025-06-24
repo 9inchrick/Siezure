@@ -1,30 +1,24 @@
 {
-  "name": "twitchkiller-backend",
-  "version": "1.0.0",
-  "description": "Backend for the next-gen streaming platform - a Twitch killer app with AI-powered features",
-  "main": "app.js",
+  "name": "siezure-client",
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "start": "node app.js",
-    "dev": "nodemon app.js"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint . --ext js,jsx,ts,tsx"
   },
-  "keywords": [
-    "streaming",
-    "twitch",
-    "AI",
-    "auto clipping",
-    "live",
-    "backend"
-  ],
-  "author": "david",
-  "license": "MIT",
   "dependencies": {
-    "express": "^4.18.2",
-    "cors": "^2.8.5",
-    "dotenv": "^16.0.3",
-    "morgan": "^1.10.0",
-    "mongoose": "^6.8.4"
+    "react": "^18.3.0",
+    "react-dom": "^18.3.0",
+    "react-router-dom": "^6.23.0",
+    "tailwindcss": "^3.4.1"
   },
   "devDependencies": {
-    "nodemon": "^2.0.20"
+    "@vitejs/plugin-react": "^4.2.1",
+    "autoprefixer": "^10.4.14",
+    "eslint": "^8.56.0",
+    "postcss": "^8.4.31",
+    "vite": "^5.2.0"
   }
 }
