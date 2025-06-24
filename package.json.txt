@@ -1,0 +1,30 @@
+{
+  "name": "twitchkiller-backend",
+  "version": "1.0.0",
+  "description": "Backend for the next-gen streaming platform - a Twitch killer app with AI-powered features",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "keywords": [
+    "streaming",
+    "twitch",
+    "AI",
+    "auto clipping",
+    "live",
+    "backend"
+  ],
+  "author": "david",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "morgan": "^1.10.0",
+    "mongoose": "^6.8.4"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
+}

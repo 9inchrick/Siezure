@@ -1,0 +1,77 @@
+// app.js
+//
+// Entry point for the backend application. This file initializes the Express app,
+// connects to the database, applies global middleware, mounts API routes (including Swagger UI)
+// and starts the server. It is built with Windows path handling in mind.
+
+const express = require('express');
+const morgan = require('morgan');
+const cors = require('cors');
+const dotenv = require('dotenv');
+const path = require('path');
+
+dotenv.config();
+
+// Import database connection
+require('./config/db');
+
+// Import route modules
+const authRoutes = require('./routes/authRoutes');
+const streamRoutes = require('./routes/streamRoutes');
+const clipRoutes = require('./routes/clipRoutes');
+const analyticsRoutes = require('./routes/analyticsRoutes');
+const videoRoutes = require('./routes/videoroutes');
+
+const app = express();
+
+// ---------------------
+// Global Middleware
+// ---------------------
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cors());
+
+if (process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev'));
+}
+
+// ---------------------
+// Route Mounting
+// ---------------------
+
+app.use('/api/auth', authRoutes);
+app.use('/api/stream', streamRoutes);
+app.use('/api/clips', clipRoutes);
+app.use('/api/analytics', analyticsRoutes);
+app.use('/api/video', videoRoutes);
+
+// ---------------------
+// Swagger UI Integration
+// ---------------------
+
+const { swaggerUi, swaggerDocument } = require('./docs/swagger');
+app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+// ---------------------
+// Error Handling
+// ---------------------
+
+app.use((req, res, next) => {
+  res.status(404).json({ message: 'Route not found' });
+});
+
+app.use((err, req, res, next) => {
+  console.error('Global Error:', err.message);
+  const statusCode = err.statusCode || 500;
+  res.status(statusCode).json({ message: err.message });
+});
+
+// ---------------------
+// Start the Server
+// ---------------------
+
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`Server started in ${process.env.NODE_ENV} mode on port ${PORT}`);
+});
