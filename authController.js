@@ -42,11 +42,13 @@ exports.register = async (req, res) => {
     await newUser.save();
 
     // Remove the password field before sending the response
-    const { password: pwd, ...userData } = newUser.toObject();
+    const userObj = newUser.toObject();
+    delete userObj.password;
+    // No need to assign to 'pwd', just destructure and ignore
 
     return res.status(201).json({
       message: 'User registered successfully',
-      user: userData,
+      user: userObj,
     });
   } catch (error) {
     console.error('Error during registration:', error);

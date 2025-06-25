@@ -3,7 +3,8 @@
 // Global error handling middleware. It captures any errors that occur in the app,
 // logs them, and sends a response to the client with the error message and status code.
 
-module.exports = (err, req, res, next) => {
+// Remove 'next' if not used to fix lint error
+module.exports = (err, req, res) => {
   console.error('Global Error:', err);
 
   // Use a custom status code if provided, otherwise default to 500 (Internal Server Error)
